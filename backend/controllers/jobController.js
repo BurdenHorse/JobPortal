@@ -151,6 +151,17 @@ exports.getJobById = async (req, res) => {
 // update a job details => employer
 exports.updateJob = async (req, res) => {
   try {
+    const job = await Job.findById(req.params.id);
+
+    if (!job) return res.status(404).json({ message: "Job not found"});
+
+    if (job.company.toString() !== req.user._id.toString()) {
+        return res.status(403).json({message: "Not authorized to update this job"});
+    }
+
+    Object.assign(job, req.body);
+    const updated = await job.save();
+    res.json(updated);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -159,6 +170,16 @@ exports.updateJob = async (req, res) => {
 // delete a job => employer
 exports.deleteJob = async (req, res) => {
   try {
+    const job = await Job.findById(req.params.id);
+
+    if (!job) return res.status(404).json({ message: "Job not found"});
+
+    if (job.company.toString() !== req.user._id.toString()) {
+        return res.status(403).json({message: "Not authorized to delete this job"});
+    }
+
+    await job.deleteOne();
+    res.json({message: "Job deleted successfully!"});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -167,6 +188,16 @@ exports.deleteJob = async (req, res) => {
 // toggle close status for a job => employer
 exports.toggleCloseJob = async (req, res) => {
   try {
+    const job = await Job.findById(req.params.id);
+
+    if (!job) return res.status(404).json({ message: "Job not found"});
+
+    if (job.company.toString() !== req.user._id.toString()) {
+        return res.status(403).json({message: "Not authorized to delete this job"});
+    }
+
+    job.isClosed = !job.isClosed;
+    await job.save();
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
