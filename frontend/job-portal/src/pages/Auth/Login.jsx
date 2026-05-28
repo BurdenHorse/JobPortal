@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle, CheckCircle, Eye, EyeOff, Loader, Lock, Mail } from 'lucide-react';
 import { validateEmail } from '../../utils/helper';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
+import { useAuth } from '../../context/Authcontext';
+import { createContext } from 'react';
 
 
 const Login = () => {
-
+    const { login } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -58,14 +62,48 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!validateForm()) return;
-
+        
         setFormState(prev => ({...prev, loading: true}));
 
         try {
-            // login api
+            const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+                email: formData.email,
+                password: formData.password,
+                rememberMe: formData.rememberMe
+            });
+
+            console.log(response);
+
+            setFormState(prev => ({
+                ...prev,
+                loading: false,
+                success: true,
+                errors: {}
+            }))
+
+            const { token, role } = response.data;
+
+            if (token) {
+                login(response.data, token);
+
+                setTimeout(() => {
+                    window.location.href = 
+                        role === "employer"
+                            ? "/employer-dashboard"
+                            : "/find-jobs";
+                }, 2000);
+            }
+        
+            setTimeout(() => {
+                const redirectPath = role === 'employer'
+                    ? '/employer-dashboard'
+                    : '/find-jobs';
+
+                window.location.href = redirectPath;
+            }, 1500);
         } catch (error) {
+            console.error('login error:',error);
             setFormState(prev => ({
                 ...prev,
                 loading: false,
