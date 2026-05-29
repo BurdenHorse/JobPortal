@@ -177,6 +177,7 @@ const DashboardLayout = ({ activeMenu, children }) => {
               companyName={user?.name || ""}
               email={user?.email || ""}
               onLogout={logout}
+              userRole={user?.role || " jobseeker"}
             />
           </div>
         </header>

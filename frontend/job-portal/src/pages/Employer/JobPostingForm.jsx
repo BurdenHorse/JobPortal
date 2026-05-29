@@ -11,6 +11,7 @@ import TextareaField from "../../components/Input/TextareaField";
 import axios from "axios";
 import axiosInstance from "../../utils/axiosInstance";
 import JobPostingPreview from "../../components/Cards/JobPostingPreview";
+import { useEffect } from "react";
 
 const JobPostingForm = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const JobPostingForm = () => {
       description: formData.description,
       requirements: formData.requirements,
       location: formData.location,
-      category: formData.jobType,
+      category: formData.category,
       type: formData.jobType,
       salaryMin: formData.salaryMin,
       salaryMax: formData.salaryMax,
@@ -143,6 +144,41 @@ const JobPostingForm = () => {
     const validationErrors = validateForm(formData);
     return Object.keys(validationErrors).length === 0;
   };
+
+  useEffect(()=>{
+
+    const fetchJobDetails = async () => {
+      if (jobId) {
+        try {
+          const response = await axiosInstance.get(API_PATHS.JOBS.GET_JOB_By_ID(jobId));
+          const jobData = response.data;
+          if (jobData) {
+            setFormData({
+              jobTitle: jobData.title,
+              location: jobData.location,
+              category: jobData.category,
+              jobType: jobData.type,
+              description: jobData.description,
+              requirements: jobData.requirements,
+              salaryMin: jobData.salaryMin,
+              salaryMax: jobData.salaryMax,
+            })
+          }
+        } catch (error) {
+          console.error("Error fetching job details");
+          if (error.response) {
+            console.error("API Error:", error.response.data.message);
+          }
+        } 
+      }
+    }
+
+    fetchJobDetails();
+
+    return () =>{
+
+    }
+  },[])
 
   if (isPreview) {
     return (

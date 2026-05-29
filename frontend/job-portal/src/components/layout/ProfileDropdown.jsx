@@ -8,7 +8,8 @@ const ProfileDropdown = ({
   avatar,
   companyName,
   email,
-  onLogout
+  onLogout,
+  userRole
 }
 ) => {
     const navigate = useNavigate();
