@@ -9,7 +9,7 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import SignUp from './pages/Auth/SignUp';
 import Login from './pages/Auth/Login';
 import JobSeekerDashboard from './pages/JobSeeker/JobSeekerDashboard';
-import Jobdetails from './pages/JobSeeker/Jobdetails';
+import JobDetails from './pages/JobSeeker/JobDetails';
 import SavedJobs from './pages/JobSeeker/SavedJobs';
 import UserProfile from './pages/JobSeeker/UserProfile';
 import ProtectedRoute from './routes/ProtectedRoute';
@@ -30,7 +30,7 @@ const App = () => {
           <Route path="login" element={<Login />} />
 
           <Route path='/find-jobs' element={<JobSeekerDashboard />}/>
-          <Route path='/job/:jobId' element={<Jobdetails />}/>
+          <Route path='/job/:jobId' element={<JobDetails />}/>
           <Route path='/saved-jobs' element={<SavedJobs />}/>
           <Route path='/profile' element={<UserProfile />}/>
 

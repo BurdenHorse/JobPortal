@@ -84,8 +84,7 @@ const EditProfileDetails = ({
                         type="email"
                         value={formData.email}
                         disabled
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-500"
-                        placeholder="Enter your full name"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-500 bg-gray-50"
                       />
                     </div>
                   </div>
