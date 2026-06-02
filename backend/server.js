@@ -28,6 +28,10 @@ connectDB();
 // Middleware
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Job Portal Backend API is running perfectly!');
+});
+
 //Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
