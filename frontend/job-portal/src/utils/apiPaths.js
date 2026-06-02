@@ -1,4 +1,4 @@
-export const BASE_URL = " https://jobportalamater-733csknj9-burdenhorses-projects.vercel.app" ||  "http://localhost:8000";
+export const BASE_URL = "https://job-portal-zeta-beryl.vercel.app" ||  "http://localhost:8000";
 
 export const API_PATHS = {
     AUTH:{
