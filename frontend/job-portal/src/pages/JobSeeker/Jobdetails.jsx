@@ -42,7 +42,7 @@ const JobDetails = () => {
   };
 
   useEffect(() => {
-    if (jobId && user) {
+    if (jobId ) {
       getJobDetailsById();
     }
   },[jobId, user]);

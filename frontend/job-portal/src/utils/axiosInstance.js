@@ -31,8 +31,15 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       if (error.response.status === 401) {
         const isLoginAPI = error.config.url.includes("login");
-        
+        const isApplicationAPI = error.config.url.includes("applications");
+        console.log(error.response);
+        if (isApplicationAPI) {
+          sessionStorage.setItem("redirectMessage", "Please sign in to continue.");
+          window.location.href = "/login";
+        }
+        else 
         if (!isLoginAPI) {
+          sessionStorage.setItem("redirectMessage", error.response.message || "Something went wrong!");
           window.location.href = "/";
         }
       } else if (error.response.status === 500) {

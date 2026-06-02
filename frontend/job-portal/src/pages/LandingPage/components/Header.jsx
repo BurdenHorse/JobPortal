@@ -7,7 +7,6 @@ import { useAuth } from "../../../context/Authcontext";
 const Header = () => {
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  console.log(user?.name);
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
@@ -35,11 +34,7 @@ const Header = () => {
             </a>
             <a
               onClick={() =>
-                navigate(
-                  isAuthenticated && user?.role === "employer"
-                    ? "/employer-dashboard"
-                    : "/login",
-                )
+                navigate("/employer-dashboard")
               }
               className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
             >
