@@ -30,7 +30,11 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.response) {
       if (error.response.status === 401) {
-        window.location.href = "/";
+        const isLoginAPI = error.config.url.includes("login");
+        
+        if (!isLoginAPI) {
+          window.location.href = "/";
+        }
       } else if (error.response.status === 500) {
         console.error("Server error. Please try again later.");
       }
